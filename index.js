@@ -27,10 +27,12 @@ let platformImage = createImage('./assets/img/platform.png');
 let backgroundImage = createImage('./assets/img/background.png');
 let hillsImage = createImage('./assets/img/hills.png');
 let platformSmallTall = createImage('./assets/img/platformSmallTall.png');
-let spriteRunLeft = createImage('./assets/img/spriteRunLeft.png');
-let spriteRunRight = createImage('./assets/img/spriteRunRight.png');
-let spriteStandLeft = createImage('./assets/img/spriteStandLeft.png');
-let spriteStandRight = createImage('./assets/img/spriteStandRight.png');
+let flagPole = createImage('./assets/img/flagpole.png');
+
+// let spriteRunLeft = createImage('./assets/img/spriteRunLeft.png');
+// let spriteRunRight = createImage('./assets/img/spriteRunRight.png');
+// let spriteStandLeft = createImage('./assets/img/spriteStandLeft.png');
+// let spriteStandRight = createImage('./assets/img/spriteStandRight.png');
 
 
 class Platform {
@@ -88,41 +90,41 @@ class Player {
         this.width = 66
         this.height = 150
 
-        this.image = createImage(spriteRunRight)
-        this.frames = 0
-        this.sprites = {
-            stand: {
-                right: createImage(spriteStandRight)
-            },
-            run: {
-                right: createImage(spriteRunRight)
-            }
-        }
-        this.currentSprite = this.sprites.stand.right
+        // this.image = createImage(spriteRunRight)
+        // this.frames = 0
+        // this.sprites = {
+        //     stand: {
+        //         right: createImage(spriteStandRight)
+        //     },
+        //     run: {
+        //         right: createImage(spriteRunRight)
+        //     }
+        // }
+        // this.currentSprite = this.sprites.stand.right
     }
     draw () {
-        c.drawImage(
-            this.currentSprite,
-            this.image, 
-            177 * this.frames,
-            0,
-            177 ,
-            400,
-            this.position.x,
-            this.position.y, 
-            this.width, 
-            this.height
-        )
+        // c.drawImage(
+        //     this.currentSprite,
+        //     this.image, 
+        //     177 * this.frames,
+        //     0,
+        //     177 ,
+        //     400,
+        //     this.position.x,
+        //     this.position.y, 
+        //     this.width, 
+        //     this.height
+        // )
         //rectangle style
-        // c.fillStyle = 'red'
-        // c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.fillStyle = 'red'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update() {
-        this.frames++
-        if (this.frames > 28) {
-            this.frames = 0
-        }
+        // this.frames++
+        // if (this.frames > 28) {
+        //     this.frames = 0
+        // }
         this.draw()
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
@@ -155,7 +157,6 @@ const keys = {
 let scrollOffset = 0
 
 function init(){
-
  player = new Player()
 // const platform = new Platform() //replaced
  platforms = [ 
@@ -193,6 +194,11 @@ function init(){
                         x: platformImage.width * 5 + 800 -2,
                         y: 470,
                         image:platformImage
+                    }),
+                    new Platform({
+                        x: platformImage.width * 5 + 1300 -2,
+                        y: 320,
+                        image:flagPole
                     })
                   ]
 
@@ -228,7 +234,6 @@ function animate() {//recursive function
         platform.draw()
     })
     player.update()
-
 
     //player movement
     if (keys.right.pressed && player.position.x < 400){//move player right 
@@ -276,8 +281,10 @@ function animate() {//recursive function
         }
     })
 
+
     //win condition
-    if(scrollOffset > platformImage.width * 5 + 300 -2){
+    if(scrollOffset > platformImage.width * 5 + 800 - 2){
+
         console.log("winner")
     }
 
@@ -285,6 +292,10 @@ function animate() {//recursive function
     if(player.position.y > canvas.height){
         init()
     }
+}
+
+function stop(){
+    
 }
 
 init()
